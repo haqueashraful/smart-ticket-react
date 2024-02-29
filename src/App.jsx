@@ -8,7 +8,7 @@ function App() {
     <>
       <div>
         <div>
-          <div className=" mx-32">
+          <div className=" lg:mx-32">
             <Header />
           </div>
           <div className="mx-0">
