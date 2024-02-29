@@ -9,7 +9,7 @@ const Modal = () => {
       {showModal && (
         <div className="fixed z-50 inset-0 flex items-center justify-center">
           <div className="modal-overlay absolute w-full h-full bg-black opacity-50"></div>
-          <div className="modal-container bg-white w-3/5 h-2/4 lg:h-3/4 mx-auto rounded-lg z-50 p-5 lg:p-14 flex flex-col items-center space-y- lg:space-y-6">
+          <div className="modal-container bg-white w-3/5 h-3/4 mx-auto rounded-lg z-50 p-5 lg:p-14 flex flex-col items-center space-y-4 lg:space-y-5">
             <div>
               <img
                 className="w-14 h-14 lg:w-auto lg:h-auto"
@@ -34,7 +34,7 @@ const Modal = () => {
                   setShowModal();
                   setClicked(false);
                 }}
-                className="btn w-auto lg:w-3/6 bg-green-600 px-5 lg:p-3 border-none rounded-full text-white font-bold my-2 lg:my-6"
+                className="btn w-auto lg:w-3/6 bg-green-600 px-5 lg:p-3 border-none rounded-full text-white font-bold my-2"
               >
                 Continue
               </button>
