@@ -2,9 +2,11 @@ import people from "../assets/images/people.png"
 import ticketCoupon from "../assets/images/ticket-cupon.png"
 import stoppage from "../assets/images/stoppage.png"
 import banner from "../assets/images/banner.png"
+import { useSeatContext } from "./Context";
 
 
 const Banner = () => {
+  const { handleBuyTicketClick } = useSeatContext()
   return (
     <div>
       <section className="static lg:relative">
@@ -22,6 +24,7 @@ const Banner = () => {
               integrated testing features allow for a streamlined .
             </p>
             <button
+            onClick={handleBuyTicketClick}
             //   onclick="buyTicket()"
               className="bg-[#1DD100] p-3 border-none rounded-lg raleway-font font-bold text-black"
             >

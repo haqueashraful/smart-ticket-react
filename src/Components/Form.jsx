@@ -2,6 +2,8 @@ import { useSeatContext } from "./Context";
 
 const Form = () => {
   const { handleNext, handleChange } = useSeatContext();
+
+
   return (
     <div>
       <form action="">
@@ -39,7 +41,9 @@ const Form = () => {
           className="input w-full border-gray-300 border border-solid focus:outline-none focus:border-none mt-2"
         />
         <button
-          onClick={handleNext}
+          onClick={(e) => {
+            handleNext(e);
+          }}
           className="w-full bg-[#1dd100] p-3 rounded-lg raleway-font hover:bg-white hover:border-[#1dd100] hover:text-black hover:border font-bold text-white my-6"
         >
           Next

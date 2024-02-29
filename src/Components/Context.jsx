@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
+import div from "./Ticket";
 
 const SeatContext = createContext();
 
@@ -14,13 +15,13 @@ export const SeatProvider = ({ children }) => {
   const [grandTotal, setGrandTotal] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-  });
+  const [clicked, setClicked] = useState(true);
   const [prevSeat, setPrevSeat] = useState([]);
   const [seatSelect, setSeatSelect] = useState([]);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState([]);
+  const [email, setEmail] = useState("");
+  const ticketDiv = useRef(null);
 
   const handleSeatClick = (event) => {
     if (
@@ -60,7 +61,6 @@ export const SeatProvider = ({ children }) => {
     incrementSeatCount();
     decrement();
   };
-  console.log(seatSelect);
 
   const applyCoupon = () => {
     if (couponValue === "Couple 20") {
@@ -85,18 +85,48 @@ export const SeatProvider = ({ children }) => {
   const decrement = () => {
     setSeatTotal((prevCount) => prevCount - 1);
   };
+
+  const resetInputFields = () => {
+    document.getElementById('name').value = ''; // Reset name input field
+    document.getElementById('phone').value = ''; // Reset phone input field
+    document.getElementById('email').value = ''; // Reset email input field
+  };
+
+  useEffect(() => {
+    if (!clicked) {
+      resetInputFields();
+      setClicked(true)
+    }
+  }, [clicked]);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
+    if (id === "phone") {
+      setPhone(value);
+    } else if (id === "name") {
+      setName(value);
+    } else {
+      setEmail(value);
+    }
   };
-  console.log(formData);
+
+  const handleBuyTicketClick = () => {
+    if (ticketDiv.current) { // Check if ref is assigned and element is mounted
+      ticketDiv.current.scrollIntoView({ behavior: 'smooth' });
+    }else{
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const handleNext = (e) => {
     e.preventDefault();
-    const { phone, name, email } = formData;
-    if (phone.length !== 11 || name === "" || email === "" || seatSelect.length === 0) {
+    if (
+      phone.length !== 11 ||
+      name === "" ||
+      email === "" ||
+      seatSelect.length === 0 ||
+      seatTotal < 0
+    ) {
       alert("Fill in all required fields and select at least one seat");
       return;
     } else {
@@ -110,9 +140,6 @@ export const SeatProvider = ({ children }) => {
       setSeatCount(0);
     }
   };
-  
-  
-  
 
   return (
     <SeatContext.Provider
@@ -131,13 +158,18 @@ export const SeatProvider = ({ children }) => {
         totalPrice,
         grandTotal,
         couponApplied,
-        discountValue,
         handleNext,
         showModal,
+        setShowModal,
         handleChange,
+        setClicked,
+        clicked,
+        discountValue,
+        handleBuyTicketClick,
+        ticketDiv,
       }}
     >
-      {children}
+      { children }
     </SeatContext.Provider>
   );
 };
