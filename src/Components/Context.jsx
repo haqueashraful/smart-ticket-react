@@ -23,6 +23,9 @@ export const SeatProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const ticketDiv = useRef(null);
 
+  console.log(seatSelect.length)
+  console.log(name,phone,email);
+
   const handleSeatClick = (event) => {
     if (
       seatCount >= 5 ||
@@ -56,8 +59,9 @@ export const SeatProvider = ({ children }) => {
     newRow.appendChild(seatClass);
     newRow.appendChild(priceCell);
     document.getElementById("ticketTable").appendChild(newRow);
-
-    setTotalPrice((prev) => prev + 550);
+      const total = (prev) => prev + 550
+    setTotalPrice(total);
+    setGrandTotal(total)
     incrementSeatCount();
     decrement();
   };
@@ -65,9 +69,9 @@ export const SeatProvider = ({ children }) => {
   const applyCoupon = () => {
     if (couponValue === "Couple 20") {
       const discount = totalPrice * 0.2;
-      const discountedPrice = totalPrice - discount;
+      // const discountedPrice = totalPrice - discount;
       setDiscountValue(Math.ceil(discount));
-      setGrandTotal(Math.ceil(discountedPrice));
+      setGrandTotal(totalPrice - Math.ceil(discount));
       setCouponApplied(true);
     } else if (couponValue === "NEW15") {
       const discount = totalPrice * 0.15;
@@ -87,9 +91,9 @@ export const SeatProvider = ({ children }) => {
   };
 
   const resetInputFields = () => {
-    document.getElementById('name').value = ''; // Reset name input field
-    document.getElementById('phone').value = ''; // Reset phone input field
-    document.getElementById('email').value = ''; // Reset email input field
+    document.getElementById('name').value = ''; 
+    document.getElementById('phone').value = '';
+    document.getElementById('email').value = '';
   };
 
   useEffect(() => {
@@ -111,7 +115,7 @@ export const SeatProvider = ({ children }) => {
   };
 
   const handleBuyTicketClick = () => {
-    if (ticketDiv.current) { // Check if ref is assigned and element is mounted
+    if (ticketDiv.current) { 
       ticketDiv.current.scrollIntoView({ behavior: 'smooth' });
     }else{
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -137,7 +141,11 @@ export const SeatProvider = ({ children }) => {
         seatId.classList.add("bg-orange-300");
         setPrevSeat(seat);
       });
+      setSeatSelect([])
       setSeatCount(0);
+      setName("")
+      setPhone([])
+      setEmail("")
     }
   };
 

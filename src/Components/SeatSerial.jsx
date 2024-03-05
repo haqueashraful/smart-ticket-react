@@ -2,7 +2,7 @@ import { useSeatContext } from "./Context";
 
 const SeatSerial = (props) => {
   const { first, first1, first2, first3, first4 } = props;
-  const { incrementSeatCount, setSeatCount, handleSeatClick, seatCount, decrement, setSeatTotal } = useSeatContext();
+  const {  handleSeatClick, seatCount } = useSeatContext();
 
   return (
     <div>
